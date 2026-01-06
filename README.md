@@ -1,9 +1,6 @@
 # oil-tank-detection
 YOLOv5 project for detecting oil storage tanks
 
-# oil-tank-detection
-YOLOv5 project for detecting oil storage tanks
-
 
 rc/
 │   ├── train.py

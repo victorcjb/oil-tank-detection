@@ -1,0 +1,5 @@
+#PLACEHOLDER
+
+#Insert Requirements Text here using 
+
+# pip freeze > requirements.txt
