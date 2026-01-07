@@ -1,5 +1,9 @@
 __pycache__/
 *.pyc
 
-
+#Data set split into train/test
 Yolo_Dataset/
+
+
+# Yolov5 model 
+yolov5/
