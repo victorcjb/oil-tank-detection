@@ -64,41 +64,44 @@ def main():
     large_image_ids = sorted(list(set([entry['file_name'].split('_')[0] 
         for entry in json_labels if entry['label'] != 'Skip'])))
     
-    train_ids, test_ids = train_test_split(large_image_ids, test_size=0.2, random_state=42)
+    all_files = [entry["file_name"] for entry in json_labels if not (isinstance(entry["label"], str) and entry["label"].lower() == "skip")]
+    train_files, test_files = train_test_split(all_files, test_size=0.2, random_state=42)
 
     for entry in tqdm(json_labels):
-        filename = entry["file_name"] 
-        if isinstance(entry["label"], str) and entry["label"].lower() == "skip":
-            continue  
-      
-        large_id = filename.split('_')[0]
-        if large_id in train_ids:
+        filename = entry["file_name"]  
+        if filename in train_files:
             Image_dst = Image_train
             Label_dst = Label_train
-        else:
+        elif filename in test_files:
             Image_dst = Image_test
             Label_dst = Label_test
+        else:
+            print(f"Skipping {filename}, not in train or test split")
+            continue
+
+        source_image = os.path.join(Original_images_folder, filename)
+        destination_image = os.path.join(Image_dst, filename)
+        shutil.copy(source_image, destination_image)
+
+        label_file = os.path.join(Label_dst, filename.replace(".jpg",".txt"))
 
 
-    source_image = os.path.join(Original_images_folder, filename)
-    destination_image = os.path.join(Image_dst, filename)
-    shutil.copy(source_image, destination_image)
+        with open(label_file, "w") as f:
+            for label_name in entry["label"]:
+                if label_name not in label_number:
+                    print(f"Skipping unknown label '{label_name}' in {filename}")
+                    continue
 
-    label_file = os.path.join(Label_dst, filename.replace(".jpg",".txt"))
-
-
-    with open(label_file, "w") as f:
-        for label_name in entry["label"]:
-            if label_name not in label_number:
-                print(f"Skipping unknown label '{label_name}' in {filename}")
-                continue
-
-            class_id = label_number[label_name]
-            for box in entry["label"][label_name]:
-                x, y, w, h = bbox_conversion(box["geometry"])
-                f.write(f"{class_id} {x} {y} {w} {h}\n")
+                class_id = label_number[label_name]
+                for box in entry["label"][label_name]:
+                    x, y, w, h = bbox_conversion(box["geometry"])
+                    f.write(f"{class_id} {x} {y} {w} {h}\n")
 
     print("YOLO dataset created with success.")
 
 if __name__ == "__main__":
     main()
+
+
+print("Number of train images:", len(os.listdir(Image_train)))
+print("Number of test images:", len(os.listdir(Image_test)))

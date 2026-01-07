@@ -21,7 +21,4 @@ path_data = kagglehub.dataset_download("towardsentropy/oil-storage-tanks")
 
 print("Path to dataset files:", path_data)
 
-
-
-
 """
