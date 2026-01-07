@@ -3,3 +3,9 @@
 #Insert Requirements Text here using 
 
 # pip freeze > requirements.txt
+
+
+
+#YOLOV5 Requirements
+
+git+https://github.com/ultralytics/yolov5.git

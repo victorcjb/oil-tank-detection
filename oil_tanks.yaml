@@ -1,0 +1,5 @@
+train: ../YOLO_Dataset/images/train
+val: ../YOLO_Dataset/images/test
+
+nc: 3  # number of classes
+names: ['Tank', 'Tank Cluster', 'Floating Head Tank']
