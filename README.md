@@ -35,5 +35,5 @@ git clone https://github.com/ultralytics/yolov5.git
 cd yolov5
 pip install -r requirements.txt
 
-#Run Yolov5 model
+#Run Yolov5 model (area for finetuning)
 for running model python yolov5/train.py --img 512 --batch 16 --epochs 50 --data oil_tanks.yaml --weights yolov5s.pt --project runs/train --name oil_tank_experiment
