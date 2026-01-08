@@ -6,3 +6,5 @@ def get_data_path():
     return Path(
         kagglehub.dataset_download("towardsentropy/oil-storage-tanks")
     )
+
+
