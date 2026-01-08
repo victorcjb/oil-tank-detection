@@ -7,3 +7,6 @@ Yolo_Dataset/
 
 # Yolov5 model 
 yolov5/
+
+#runs from mode
+runs/train/oil_tank_experiment/
